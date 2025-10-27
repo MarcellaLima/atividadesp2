@@ -1,0 +1,352 @@
+import random
+import time
+
+def busca_sequencial(lista, alvo):
+    for i in range(len(lista)):
+        if lista[i] == alvo:
+            return i
+    return -1
+
+def busca_binaria(lista, alvo):
+    inicio = 0
+    fim = len(lista) - 1
+    while inicio <= fim:
+        meio = (inicio + fim) // 2
+        if lista[meio] == alvo:
+            return meio
+        elif lista[meio] < alvo:
+            inicio = meio + 1
+        else:
+            fim = meio - 1
+    return -1
+
+lista = random.sample(range(1, 2_000_000), 1_000_000)
+alvo = random.choice(lista)
+
+inicio = time.time()
+busca_sequencial(lista, alvo)
+fim = time.time()
+tempo_seq = fim - inicio
+
+lista.sort()
+inicio = time.time()
+busca_binaria(lista, alvo)
+fim = time.time()
+tempo_bin = fim - inicio
+
+print("Comparação de desempenho:")
+print(f"Tamanho da lista: {len(lista):,} elementos")
+print(f"Elemento procurado: {alvo}")
+print(f"Tempo busca sequencial: {tempo_seq:.6f} segundos")
+print(f"Tempo busca binária: {tempo_bin:.6f} segundos")
+
+if tempo_seq > tempo_bin:
+    print("→ Busca binária foi mais rápida!")
+else:
+    print("→ Busca sequencial foi mais rápida).")
+
+
+#Nível 1 – Fundamentos
+
+import time
+
+def busca_linear(lista, alvo):
+    for i in range(len(lista)):
+        if lista[i] == alvo:
+            return i  
+    return -1  
+
+
+def contar_ocorrencias(lista, alvo):
+    contador = 0
+    for elemento in lista:
+        if elemento == alvo:
+            contador += 1
+    return contador
+
+def maior_numero(lista):
+    maior = lista[0]
+    for elemento in lista:
+        if elemento > maior:
+            maior = elemento
+    return maior
+
+def menor_numero(lista):
+    menor = lista[0]
+    for elemento in lista:
+        if elemento < menor:
+            menor = elemento
+    return menor
+
+def busca_binaria(lista, alvo):
+    inicio = 0
+    fim = len(lista) - 1
+    while inicio <= fim:
+        meio = (inicio + fim) // 2
+        if lista[meio] == alvo:
+            return meio
+        elif lista[meio] < alvo:
+            inicio = meio + 1
+        else:
+            fim = meio - 1
+    return -1
+
+lista = [10, 23, 4, 56, 78, 23, 4, 90, 15]
+alvo = 23
+
+print("Lista:", lista)
+print("Número alvo:", alvo)
+
+inicio = time.time()
+indice = busca_linear(lista, alvo)
+fim = time.time()
+print("\n1. Busca Linear Simples:")
+if indice != -1:
+    print(f"Elemento encontrado no índice {indice}")
+else:
+    print("Elemento não encontrado.")
+print("Tempo:", fim - inicio, "segundos")
+
+inicio = time.time()
+ocorrencias = contar_ocorrencias(lista, alvo)
+fim = time.time()
+print("\n2. Contar Ocorrências:")
+print(f"O número {alvo} aparece {ocorrencias} vezes.")
+print("Tempo:", fim - inicio, "segundos")
+
+inicio = time.time()
+maior = maior_numero(lista)
+fim = time.time()
+print("\n3. Maior Número:")
+print("Maior número da lista:", maior)
+print("Tempo:", fim - inicio, "segundos")
+
+inicio = time.time()
+menor = menor_numero(lista)
+fim = time.time()
+print("\n4. Menor Número:")
+print("Menor número da lista:", menor)
+print("Tempo:", fim - inicio, "segundos")
+
+lista_ordenada = sorted(lista)
+inicio = time.time()
+indice_binaria = busca_binaria(lista_ordenada, alvo)
+fim = time.time()
+print("\n5. Busca Binária:")
+print("Lista ordenada:", lista_ordenada)
+if indice_binaria != -1:
+    print(f"Elemento encontrado no índice {indice_binaria}")
+else:
+    print("Elemento não encontrado.")
+print("Tempo:", fim - inicio, "segundos")
+
+#Nível 2 – Aplicações Práticas
+
+import time
+import random
+
+def busca_nome_linear(lista, nome):
+    for i in range(len(lista)):
+        if lista[i].lower() == nome.lower():  
+            return i
+    return -1
+
+def busca_binaria_recursiva(lista, alvo, inicio, fim):
+    if inicio > fim:
+        return -1
+    meio = (inicio + fim) // 2
+    if lista[meio] == alvo:
+        return meio
+    elif lista[meio] < alvo:
+        return busca_binaria_recursiva(lista, alvo, meio + 1, fim)
+    else:
+        return busca_binaria_recursiva(lista, alvo, inicio, meio - 1)
+
+def comparar_tempos():
+    lista = sorted(random.sample(range(1, 2_000_000), 1_000_000))
+    alvo = random.choice(lista)
+
+    inicio = time.time()
+    for i in range(len(lista)):
+        if lista[i] == alvo:
+            break
+    fim = time.time()
+    tempo_linear = fim - inicio
+
+    inicio = time.time()
+    busca_binaria_recursiva(lista, alvo, 0, len(lista) - 1)
+    fim = time.time()
+    tempo_binaria = fim - inicio
+
+    print("\n8. Comparação de Tempo (1 milhão de elementos):")
+    print(f"→ Tempo Busca Linear: {tempo_linear:.6f} segundos")
+    print(f"→ Tempo Busca Binária: {tempo_binaria:.6f} segundos")
+    print("A busca binária é muito mais eficiente em listas grandes!")
+
+def primeira_ocorrencia(lista, alvo):
+    inicio = 0
+    fim = len(lista) - 1
+    resultado = -1
+    while inicio <= fim:
+        meio = (inicio + fim) // 2
+        if lista[meio] == alvo:
+            resultado = meio
+            fim = meio - 1  
+        elif lista[meio] < alvo:
+            inicio = meio + 1
+        else:
+            fim = meio - 1
+    return resultado
+
+
+def intervalo_indices(lista, alvo):
+    primeiro = primeira_ocorrencia(lista, alvo)
+    if primeiro == -1:
+        return (-1, -1)
+
+    inicio = primeiro
+    fim = len(lista) - 1
+    ultimo = primeiro
+    while inicio <= fim:
+        meio = (inicio + fim) // 2
+        if lista[meio] == alvo:
+            ultimo = meio
+            inicio = meio + 1
+        elif lista[meio] < alvo:
+            inicio = meio + 1
+        else:
+            fim = meio - 1
+    return (primeiro, ultimo)
+
+nomes = []
+print("Digite nomes (ou 'fim' para parar):")
+while True:
+    nome = input("> ")
+    if nome.lower() == "fim":
+        break
+    nomes.append(nome)
+
+print("\nLista de nomes:", nomes)
+alvo_nome = input("Digite o nome que deseja buscar: ")
+indice = busca_nome_linear(nomes, alvo_nome)
+if indice != -1:
+    print(f"Nome encontrado no índice {indice}")
+else:
+    print("Nome não encontrado.")
+
+lista_exemplo = sorted([10, 15, 20, 25, 30, 35, 40])
+print("\n7. Busca Binária Recursiva")
+print("Lista:", lista_exemplo)
+alvo = 25
+indice = busca_binaria_recursiva(lista_exemplo, alvo, 0, len(lista_exemplo) - 1)
+if indice != -1:
+    print(f"Elemento {alvo} encontrado no índice {indice}")
+else:
+    print("Elemento não encontrado.")
+
+comparar_tempos()
+
+lista_repetidos = [1, 2, 2, 2, 3, 4, 4, 5]
+print("\n9. Primeira Ocorrência")
+print("Lista:", lista_repetidos)
+alvo = 2
+indice = primeira_ocorrencia(lista_repetidos, alvo)
+print(f"Primeira ocorrência de {alvo}: índice {indice}")
+
+print("\n10. Intervalo de Índices")
+inicio, fim = intervalo_indices(lista_repetidos, alvo)
+print(f"O número {alvo} aparece do índice {inicio} ao {fim}")
+
+#Nível 3 – Desafios
+
+import random
+import time
+
+def busca_pessoa_por_nome(pessoas, nome):
+    for pessoa in pessoas:
+        if pessoa["nome"].lower() == nome.lower():
+            return pessoa
+    return None
+
+
+def jogo_adivinhe_numero():
+    print("\n12. 🎯 Jogo: Adivinhe o Número (1 a 100)")
+    baixo = 1
+    alto = 100
+    tentativas = 0
+    numero_secreto = random.randint(baixo, alto)
+    print("(O computador já escolheu um número entre 1 e 100!)")
+
+    while True:
+        palpite = (baixo + alto) // 2  
+        tentativas += 1
+        print(f"Tentativa {tentativas}: {palpite}")
+
+        if palpite == numero_secreto:
+            print(f"✅ Acertou! O número era {numero_secreto}.")
+            print(f"Total de tentativas: {tentativas}")
+            break
+        elif palpite < numero_secreto:
+            print("O número secreto é MAIOR!")
+            baixo = palpite + 1
+        else:
+            print("O número secreto é MENOR!")
+            alto = palpite - 1
+
+
+def buscar_produtos_por_preco(produtos, preco_alvo):
+    encontrados = []
+    for produto in produtos:
+        if produto["preco"] == preco_alvo:
+            encontrados.append(produto)
+    return encontrados
+
+
+def meu_index(lista, valor):
+    for i in range(len(lista)):
+        if lista[i] == valor:
+            return i
+    raise ValueError(f"{valor} não está na lista")
+
+
+print("11. Busca em Lista de Dicionários")
+pessoas = [
+    {"nome": "Ana", "idade": 25},
+    {"nome": "João", "idade": 30},
+    {"nome": "Maria", "idade": 22},
+    {"nome": "Carlos", "idade": 28}
+]
+nome_busca = "João"
+resultado = busca_pessoa_por_nome(pessoas, nome_busca)
+if resultado:
+    print(f"Pessoa encontrada: {resultado}")
+else:
+    print("Pessoa não encontrada.")
+
+jogo_adivinhe_numero()
+
+print("\n13. Buscar Produtos por Preço")
+produtos = [
+    {"nome": "Notebook", "preco": 3500},
+    {"nome": "Mouse", "preco": 80},
+    {"nome": "Teclado", "preco": 150},
+    {"nome": "Monitor", "preco": 150},
+    {"nome": "Cadeira Gamer", "preco": 1200}
+]
+preco_alvo = 150
+encontrados = buscar_produtos_por_preco(produtos, preco_alvo)
+if encontrados:
+    print(f"Produtos com preço R${preco_alvo}:")
+    for p in encontrados:
+        print(" -", p["nome"])
+else:
+    print("Nenhum produto com esse preço foi encontrado.")
+
+print("\n14. Função meu_index()")
+lista_exemplo = ["maçã", "banana", "laranja", "uva"]
+valor = "laranja"
+try:
+    indice = meu_index(lista_exemplo, valor)
+    print(f"Valor '{valor}' encontrado no índice {indice}")
+except ValueError as e:
+    print(e)
