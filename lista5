@@ -1,0 +1,192 @@
+#Controle de Temperatura de Salas
+
+temperaturas = []
+
+for i in range(5):  
+    sala = []
+    print(f"\nDigite as 3 temperaturas da Sala {i+1}:")
+    for j in range(3):  
+        temp = float(input(f"Temperatura {j+1}: "))
+        sala.append(temp)
+    temperaturas.append(sala)
+
+print("\nTemperatura média de cada sala:")
+for i in range(5):
+    media = sum(temperaturas[i]) / len(temperaturas[i])
+    print(f"Sala {i+1}: {media:.2f} °C")
+
+#Grade de Notas de Alunos
+
+notas = []
+
+for i in range(4):
+    aluno = []
+    print(f"\nDigite as 3 notas do Aluno {i+1}:")
+    for j in range(3): 
+        nota = float(input(f"Nota da prova {j+1}: "))
+        aluno.append(nota)
+    notas.append(aluno)
+
+print("\nMédia de cada aluno:")
+for i in range(4):
+    media_aluno = sum(notas[i]) / len(notas[i])
+    print(f"Aluno {i+1}: {media_aluno:.2f}")
+
+print("\nMédia de cada prova:")
+for j in range(3):
+    soma_prova = 0
+    for i in range(4):
+        soma_prova += notas[i][j]
+    media_prova = soma_prova / 4
+    print(f"Prova {j+1}: {media_prova:.2f}")
+
+#Agenda Semanal
+
+agenda = []
+
+for dia in range(5):  
+    pacientes_dia = []
+    print(f"\nDia {dia + 1}:")
+    for hora in range(3):  
+        nome = input(f"  Nome do paciente para o horário {hora + 1}: ")
+        pacientes_dia.append(nome)
+    agenda.append(pacientes_dia)
+
+print("\n AGENDA COMPLETA DA SEMANA:")
+for dia in range(5):
+    print(f"\nDia {dia + 1}:")
+    for hora in range(3):
+        print(f"  Horário {hora + 1}: {agenda[dia][hora]}")
+
+#Controle de Estoque
+
+estoque = []
+
+for produto in range(4):  
+    quantidades = []
+    print(f"\nProduto {produto + 1}:")
+    for loja in range(3):  
+        qtd = int(input(f"  Quantidade na loja {loja + 1}: "))
+        quantidades.append(qtd)
+    estoque.append(quantidades)
+
+print("\n Total de cada produto:")
+for produto in range(4):
+    total = sum(estoque[produto])
+    print(f"Produto {produto + 1}: {total} unidades")
+
+#Registro de Pontos em Jogos
+
+pontos = [
+    [3, 1, 0, 2],  
+    [2, 2, 3, 1],  
+    [0, 3, 1, 3]   
+]
+
+totais = [sum(time) for time in pontos]
+
+for i, total in enumerate(totais, start=1):
+    print(f"Time {i} - Total de pontos: {total}")
+
+maior_pontuacao = max(totais)
+time_vencedor = totais.index(maior_pontuacao) + 1
+
+print(f"\nO time com maior pontuação é o Time {time_vencedor} ({maior_pontuacao} pontos).")
+
+#Horários de Transporte
+
+horarios = [
+    ["06:00", "12:00", "18:00"],  
+    ["07:30", "13:30", "19:30"],  
+    ["05:45", "11:45", "17:45"],  
+    ["08:15", "14:15", "20:15"]   
+]
+
+print("=== Consulta de horários de ônibus ===")
+linha = int(input("Digite o número da linha (1 a 4): "))
+5
+if 1 <= linha <= 4:
+    print(f"\nHorários da Linha {linha}:")
+    for horario in horarios[linha - 1]:
+        print("-", horario)
+else:
+    print("Número de linha inválido. Tente novamente (1 a 4).")
+
+#Vendas Semanais
+
+vendas = [
+    [120, 150, 100, 130, 160, 140, 180], 
+    [80,  90,  70,  85,  95,  100, 110],  
+    [200, 220, 210, 230, 240, 250, 260],  
+    [60,  55,  65,  70,  60,  75,  80],   
+    [300, 320, 310, 330, 340, 350, 360]   
+]
+
+receita_total = [sum(produto) for produto in vendas]
+
+print("=== Receita Total Semanal por Produto ===")
+for i, total in enumerate(receita_total, start=1):
+    print(f"Produto {i}: R$ {total:.2f}")
+
+receita_geral = sum(receita_total)
+print(f"\nReceita total da semana (todos os produtos): R$ {receita_geral:.2f}")
+
+#Distribuição de Cadeiras
+
+
+cinema = [
+    ["O", "X", "O", "O", "X", "O"],  
+    ["O", "O", "O", "X", "O", "O"],  
+    ["X", "X", "O", "O", "O", "O"],  
+    ["O", "O", "O", "O", "X", "O"],  
+    ["O", "O", "X", "O", "O", "O"]   
+]
+
+print("=== Mapa de Assentos (X = ocupada, O = livre) ===\n")
+
+for i, fila in enumerate(cinema, start=1):
+    print(f"Fila {i}: {' '.join(fila)}")
+
+#Planejamento de Exercícios
+
+repeticoes = [
+    [12, 15, 20],  
+    [10, 18, 25],  
+    [14, 12, 22],  
+    [16, 20, 18]   
+]
+
+totais_exercicios = [sum(coluna) for coluna in zip(*repeticoes)]
+
+print("=== Total de repetições por exercício ===")
+for i, total in enumerate(totais_exercicios, start=1):
+    print(f"Exercício {i}: {total} repetições")
+
+print("\n=== Matriz de repetições (Alunos x Exercícios) ===")
+for i, aluno in enumerate(repeticoes, start=1):
+    print(f"Aluno {i}: {aluno}")
+
+#Registro de Chuva
+
+chuva = [
+    [10, 5, 0, 12, 8, 4, 6],   
+    [3,  7, 2, 0,  5, 1, 0],   
+    [15, 10, 12, 8, 20, 18, 14] 
+]
+
+totais = [sum(cidade) for cidade in chuva]
+
+print("=== Total de chuva semanal por cidade ===")
+for i, total in enumerate(totais, start=1):
+    print(f"Cidade {i}: {total} mm")
+
+maior_chuva = max(totais)
+cidade_mais_chuvosa = totais.index(maior_chuva) + 1
+
+print(f"\nA cidade com mais chuva na semana foi a Cidade {cidade_mais_chuvosa}, com {maior_chuva} mm.")
+
+
+
+
+
+
