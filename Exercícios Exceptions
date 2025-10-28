@@ -1,0 +1,76 @@
+#1
+
+try:
+    a = float(input("Digite o primeiro número: "))
+    b = float(input("Digite o segundo número: "))
+    resultado = a / b
+except ValueError:
+    print("Erro: você deve digitar apenas números!")
+except ZeroDivisionError:
+    print("Erro: não é possível dividir por zero!")
+else:
+    print(f"Resultado da divisão: {resultado}")
+finally:
+    print("Fim do programa.")
+
+#2
+
+cores = {'vermelho': (255, 0, 0), 'verde': (0, 255, 0), 'azul': (0, 0, 255)}
+
+try:
+    cor = input("Digite o nome de uma cor (vermelho, verde, azul): ").lower()
+    rgb = cores[cor]  
+except KeyError:
+    print("Erro: cor não encontrada no dicionário!")
+else:
+    print(f"A cor {cor} em RGB é {rgb}.")
+
+#3
+
+try:
+    num = int(input("Digite um número: "))
+    if num > 10:
+        print("Número válido!")
+    else:
+        print("Número inválido, deve ser maior que 10.")
+except ValueError:
+    print("Erro: você deve digitar um número inteiro!")
+else:
+    print("Programa executado com sucesso!")
+finally:
+    print("Programa encerrado.")
+
+#4
+
+class SenhaInvalidaError(Exception):
+    pass
+
+senha = input("Digite sua senha: ")
+
+try:
+    if len(senha) < 8 or not any(c.isdigit() for c in senha):
+        raise SenhaInvalidaError("Senha inválida! Deve ter ≥8 caracteres e pelo menos um número.")
+    print("Senha válida!")
+except SenhaInvalidaError as e:
+    print(e)
+
+#5
+
+def transferencia_bancaria():
+    try:
+        saldo = float(input("Digite o saldo da sua conta: R$ "))
+        valor = float(input("Digite o valor da transferência: R$ "))
+
+        if valor > saldo:
+            raise ValueError("Saldo insuficiente")
+
+        saldo -= valor
+        print(f"Transferência realizada com sucesso! Saldo atual: R$ {saldo:.2f}")
+
+    except ValueError as erro:
+        print(f"Erro: {erro}")
+    except Exception as e:
+        print(f"Ocorreu um erro inesperado: {e}")
+
+transferencia_bancaria()
+
