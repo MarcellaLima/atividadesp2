@@ -1,0 +1,43 @@
+import random
+
+tabuleiro = [["O" for _ in range(5)] for _ in range(5)]
+
+tesouro_linha = random.randint(0, 4)
+tesouro_coluna = random.randint(0, 4)
+
+for t in range(7):
+    print("\nTentativa", t + 1)
+    for linha in tabuleiro:
+        print(" ".join(linha))
+    
+    try:
+        l = int(input("Linha (0-4): "))
+        c = int(input("Coluna (0-4): "))
+    except ValueError:
+        print("Digite números válidos!")
+        continue
+    
+    if not (0 <= l <= 4 and 0 <= c <= 4):
+        print("Fora do tabuleiro!")
+        continue
+    
+    if l == tesouro_linha and c == tesouro_coluna:
+        tabuleiro[l][c] = "T"
+        for linha in tabuleiro:
+            print(" ".join(linha))
+        print("Você encontrou o tesouro!")
+        break
+    else:
+        tabuleiro[l][c] = "X"
+        
+        if l < tesouro_linha:
+            print("O tesouro está mais para BAIXO.")
+        elif l > tesouro_linha:
+            print("O tesouro está mais para CIMA.")
+        elif c < tesouro_coluna:
+            print("O tesouro está mais para a DIREITA.")
+        elif c > tesouro_coluna:
+            print("O tesouro está mais para a ESQUERDA.")
+else:
+    print("\nSuas tentativas acabaram!")
+    print(f"O tesouro estava em ({tesouro_linha}, {tesouro_coluna}).")
