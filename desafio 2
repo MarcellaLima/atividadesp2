@@ -1,0 +1,85 @@
+import random
+
+def criar_tabuleiro(linhas, colunas, qtd_minas):
+    tabuleiro = [[' ' for _ in range(colunas)] for _ in range(linhas)]
+    minas_colocadas = 0
+    while minas_colocadas < qtd_minas:
+        l = random.randint(0, linhas - 1)
+        c = random.randint(0, colunas - 1)
+        if tabuleiro[l][c] != '*':
+            tabuleiro[l][c] = '*'
+            minas_colocadas += 1
+    return tabuleiro
+
+def mostrar_tabuleiro(tabuleiro, revelado):
+    print("\n   " + " ".join(str(i) for i in range(len(tabuleiro[0]))))
+    print("   " + "--" * len(tabuleiro[0]))
+    for i in range(len(tabuleiro)):
+        linha_mostrar = []
+        for j in range(len(tabuleiro[0])):
+            if revelado[i][j]:
+                linha_mostrar.append(tabuleiro[i][j])
+            else:
+                linha_mostrar.append('#')
+        print(f"{i} | " + " ".join(linha_mostrar))
+    print()
+
+def contar_minas_vizinhas(tabuleiro, linha, coluna):
+    linhas = len(tabuleiro)
+    colunas = len(tabuleiro[0])
+    contagem = 0
+    for i in range(linha - 1, linha + 2):
+        for j in range(coluna - 1, coluna + 2):
+            if 0 <= i < linhas and 0 <= j < colunas and not (i == linha and j == coluna):
+                if tabuleiro[i][j] == '*':
+                    contagem += 1
+    return str(contagem)
+
+def revelar_celula(tabuleiro, revelado, linha, coluna):
+    if revelado[linha][coluna]:
+        return
+    revelado[linha][coluna] = True
+    if tabuleiro[linha][coluna] == ' ':
+        tabuleiro[linha][coluna] = contar_minas_vizinhas(tabuleiro, linha, coluna)
+        if tabuleiro[linha][coluna] == '0':
+            for i in range(linha - 1, linha + 2):
+                for j in range(coluna - 1, coluna + 2):
+                    if 0 <= i < len(tabuleiro) and 0 <= j < len(tabuleiro[0]):
+                        revelar_celula(tabuleiro, revelado, i, j)
+
+def jogar(linhas=5, colunas=5, minas=5):
+    tabuleiro = criar_tabuleiro(linhas, colunas, minas)
+    revelado = [[False for _ in range(colunas)] for _ in range(linhas)]
+    total_seguras = linhas * colunas - minas
+    abertas = 0
+
+    while True:
+        mostrar_tabuleiro(tabuleiro, revelado)
+        try:
+            l = int(input("Digite a linha: "))
+            c = int(input("Digite a coluna: "))
+            if not (0 <= l < linhas and 0 <= c < colunas):
+                print("Coordenadas fora do tabuleiro! Tente novamente.")
+                continue
+        except ValueError:
+            print("Entrada inválida! Use números inteiros.")
+            continue
+
+        if tabuleiro[l][c] == '*':
+            print("\n BOOM! Você pisou em uma mina! Game Over.\n")
+            for i in range(linhas):
+                for j in range(colunas):
+                    revelado[i][j] = True
+            mostrar_tabuleiro(tabuleiro, revelado)
+            break
+
+        revelar_celula(tabuleiro, revelado, l, c)
+        abertas = sum(sum(1 for c in linha if c) for linha in revelado)
+
+        if abertas == total_seguras:
+            print("\n Parabéns! Você venceu!\n")
+            mostrar_tabuleiro(tabuleiro, revelado)
+            break
+
+if __name__ == "__main__":
+    jogar()
